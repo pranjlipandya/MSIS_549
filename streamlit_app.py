@@ -4,8 +4,10 @@ from PIL import Image
 import io
 
 st.title('EcoTrack Recycling Assistant')
-
 st.write("Welcome to EcoTrack, your smart AI-powered recycling assistant!")
+
+# City selection dropdown
+city = st.selectbox('Select your city:', ['Seattle'])
 
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png"])
 if uploaded_file is not None:
@@ -24,8 +26,12 @@ if uploaded_file is not None:
     )
     
     if response.status_code == 200:
-        # Display the prediction result
         result = response.json()
-        st.write(f"Predicted class: {result['predicted_class']}")
+        st.write(f"Item classification: {result['class_name']}")
+        st.write("Recycling Instructions:")
+        st.write(result['recycling_instructions'])
+        
+        if city == 'Seattle':
+            st.markdown("For more information on recycling in Seattle, visit [Seattle Public Utilities](https://www.seattle.gov/utilities/your-services/collection-and-disposal/recycling).")
     else:
         st.error(f"Failed to get prediction from the server. Status code: {response.status_code}")
