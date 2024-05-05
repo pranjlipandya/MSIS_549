@@ -19,7 +19,7 @@ if uploaded_file is not None:
     
     # Send the image to Flask, ensuring the name matches and including the MIME type
     response = requests.post(
-        'http://localhost:5000/predict',
+        'http://127.0.0.1:5000/predict',
         files={"file": ("filename.jpg", image_bytes, "image/jpeg")}
     )
     
